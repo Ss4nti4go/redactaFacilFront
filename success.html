@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>¡Pago Exitoso! | RedactaFácil</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #6366f1;
+      --primary-dark: #4f46e5;
+      --accent: #10b981;
+      --text-primary: #1e293b;
+      --text-secondary: #64748b;
+      --background: #ffffff;
+      --surface: #f8fafc;
+      --border: #e2e8f0;
+      --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+      --border-radius: 12px;
+    }
+    
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--background);
+      color: var(--text-primary);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      margin: 0;
+      padding: 20px;
+    }
+    
+    .success-container {
+      background-color: var(--surface);
+      border-radius: var(--border-radius);
+      box-shadow: var(--shadow);
+      padding: 40px;
+      text-align: center;
+      max-width: 500px;
+      width: 100%;
+    }
+    
+    .success-icon {
+      font-size: 64px;
+      color: var(--accent);
+      margin-bottom: 20px;
+    }
+    
+    h1 {
+      color: var(--primary);
+      margin-bottom: 16px;
+    }
+    
+    p {
+      color: var(--text-secondary);
+      margin-bottom: 24px;
+      line-height: 1.6;
+    }
+    
+    .btn {
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: var(--border-radius);
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+      transition: all 0.3s ease;
+    }
+    
+    .btn:hover {
+      background: var(--primary-dark);
+      transform: translateY(-2px);
+    }
+  </style>
+</head>
+<body>
+  <div class="success-container">
+    <i class="fas fa-check-circle success-icon"></i>
+    <h1>¡Pago Exitoso!</h1>
+    <p>Tu cuenta ha sido actualizada a Premium. Ahora puedes disfrutar de 100 generaciones mensuales y todas las funciones premium de RedactaFácil.</p>
+    <a href="/" class="btn">Volver a RedactaFácil</a>
+  </div>
+  
+  <script>
+    // Actualizar datos en localStorage si es posible
+    document.addEventListener('DOMContentLoaded', function() {
+      try {
+        const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+        if (currentUser) {
+          currentUser.isPremium = true;
+          currentUser.usage = {
+            ...currentUser.usage,
+            monthlyCount: 0,
+            monthlyLimit: 100
+          };
+          localStorage.setItem('currentUser', JSON.stringify(currentUser));
+        }
+      } catch (error) {
+        console.error('Error actualizando datos de usuario:', error);
+      }
+    });
+  </script>
+</body>
+</html>
