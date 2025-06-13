@@ -953,6 +953,100 @@
         font-weight: 600;
     }
 
+    .verification-badge {
+        background: var(--warning);
+        color: white;
+        padding: 0.125rem 0.5rem;
+        border-radius: 50px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        margin-left: 0.5rem;
+    }
+
+    .verification-banner {
+        background: rgba(245, 158, 11, 0.1);
+        border: 1px solid var(--warning);
+        padding: 0.75rem 1rem;
+        margin-bottom: 1rem;
+        border-radius: var(--border-radius);
+    }
+
+    .verification-banner-content {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        color: var(--warning);
+    }
+
+    .verification-banner i {
+        font-size: 1.25rem;
+    }
+
+    .verify-btn {
+        background: var(--warning);
+        color: white;
+        border: none;
+        padding: 0.5rem 1rem;
+        border-radius: var(--border-radius);
+        font-size: 0.875rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .verify-btn:hover {
+        transform: translateY(-1px);
+        box-shadow: var(--shadow);
+    }
+
+    .verification-code-input {
+        display: flex;
+        gap: 0.5rem;
+        justify-content: center;
+        margin: 1.5rem 0;
+    }
+
+    .code-digit {
+        width: 3rem;
+        height: 3.5rem;
+        border: 2px solid var(--border);
+        border-radius: var(--border-radius);
+        font-size: 1.5rem;
+        text-align: center;
+        font-weight: 600;
+        background: var(--background);
+        color: var(--text-primary);
+        transition: all 0.3s ease;
+    }
+
+    .code-digit:focus {
+        outline: none;
+        border-color: var(--primary);
+        box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+    }
+
+    .resend-code {
+        text-align: center;
+        margin-top: 1rem;
+        font-size: 0.875rem;
+        color: var(--text-secondary);
+    }
+
+    .resend-code button {
+        background: none;
+        border: none;
+        color: var(--primary);
+        font-weight: 500;
+        cursor: pointer;
+        padding: 0;
+        font-size: 0.875rem;
+    }
+
+    .resend-code button:hover {
+        text-decoration: underline;
+    }
+
     .usage-indicator {
         background: var(--surface);
         border: 1px solid var(--border);
@@ -1095,6 +1189,27 @@
             </form>
             <div class="auth-switch">
                 ¿Ya tienes cuenta? <a href="#" onclick="showLoginForm()">Inicia sesión aquí</a>
+            </div>
+        </div>
+
+        <!-- Verify Form -->
+        <div id="verifyForm" style="display: none;">
+            <div class="modal-header">
+                <h2 class="modal-title">Verificar Cuenta</h2>
+                <p class="modal-subtitle">Ingresa el código de 6 dígitos enviado a tu email</p>
+            </div>
+            <form class="auth-form" onsubmit="handleVerify(event)">
+                <input type="text" class="auth-input" placeholder="Código de verificación" required id="verificationCode" maxlength="6" pattern="[0-9]{6}">
+                <button type="submit" class="auth-btn" id="verifyBtn">
+                    <i class="fas fa-check"></i> Verificar Cuenta
+                </button>
+            </form>
+            <div class="resend-code">
+                ¿No recibiste el código? 
+                <button id="resendCodeBtn" onclick="resendVerificationCode()">Reenviar código</button>
+            </div>
+            <div class="auth-switch">
+                <a href="#" onclick="showLoginForm()">Volver a inicio de sesión</a>
             </div>
         </div>
     </div>

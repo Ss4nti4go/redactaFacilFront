@@ -5,11 +5,14 @@ let currentType = "renuncia"
 let currentData = {}
 let apiOnline = false
 let letterHistory = []
+let pendingVerification = false
 
 // Inicializar Mercado Pago SDK
-const mp = new MercadoPago("APP_USR-70e73a4b-4ada-48b5-a204-eeef10e3dc30", {
-  locale: "es-UY",
-})
+if (window.MercadoPago) {
+  const mp = new MercadoPago("APP_USR-70e73a4b-4ada-48b5-a204-eeef10e3dc30", {
+    locale: "es-UY",
+  })
+}
 
 // Ejemplos predefinidos
 const examples = {
@@ -64,23 +67,38 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (status === "approved") {
     // Actualizar usuario a premium
-    const currentUser = JSON.parse(localStorage.getItem("currentUser"))
-    if (currentUser) {
-      currentUser.isPremium = true
-      currentUser.usage = {
-        ...currentUser.usage,
-        monthlyCount: 0,
-        monthlyLimit: 100,
-      }
-      localStorage.setItem("currentUser", JSON.stringify(currentUser))
-
-      // Mostrar mensaje de éxito
-      setTimeout(() => {
-        showToast("¡Felicidades! Tu cuenta ha sido actualizada a Premium 👑", "success")
-      }, 1000)
-    }
+    refreshUserData().then(() => {
+      showToast("¡Felicidades! Tu cuenta ha sido actualizada a Premium 👑", "success")
+    })
   }
 })
+
+// Función para refrescar los datos del usuario desde el servidor
+async function refreshUserData() {
+  const savedToken = localStorage.getItem("authToken")
+  if (!savedToken) return false
+
+  try {
+    const response = await fetch("https://redactafacil.onrender.com/api/auth/me", {
+      headers: {
+        Authorization: `Bearer ${savedToken}`,
+      },
+    })
+
+    if (!response.ok) {
+      throw new Error("Error al obtener datos del usuario")
+    }
+
+    const data = await response.json()
+    currentUser = data.user
+    localStorage.setItem("currentUser", JSON.stringify(currentUser))
+    updateUserInterface()
+    return true
+  } catch (error) {
+    console.error("Error al refrescar datos del usuario:", error)
+    return false
+  }
+}
 
 // ==================== FUNCIONES DE AUTENTICACIÓN ====================
 
@@ -90,8 +108,10 @@ function showAuthModal(type = "login") {
 
   if (type === "login") {
     showLoginForm()
-  } else {
+  } else if (type === "register") {
     showRegisterForm()
+  } else if (type === "verify") {
+    showVerifyForm()
   }
 }
 
@@ -102,12 +122,38 @@ function closeAuthModal() {
 
 function showLoginForm() {
   document.getElementById("loginForm").style.display = "block"
-  document.getElementById("registerForm").style.display = "none"
+
+  // Asegurarse de que los otros formularios estén ocultos
+  const registerForm = document.getElementById("registerForm")
+  if (registerForm) registerForm.style.display = "none"
+
+  const verifyForm = document.getElementById("verifyForm")
+  if (verifyForm) verifyForm.style.display = "none"
 }
 
 function showRegisterForm() {
-  document.getElementById("loginForm").style.display = "none"
   document.getElementById("registerForm").style.display = "block"
+
+  // Asegurarse de que los otros formularios estén ocultos
+  const loginForm = document.getElementById("loginForm")
+  if (loginForm) loginForm.style.display = "none"
+
+  const verifyForm = document.getElementById("verifyForm")
+  if (verifyForm) verifyForm.style.display = "none"
+}
+
+function showVerifyForm() {
+  const verifyForm = document.getElementById("verifyForm")
+  if (verifyForm) {
+    verifyForm.style.display = "block"
+
+    // Asegurarse de que los otros formularios estén ocultos
+    const loginForm = document.getElementById("loginForm")
+    if (loginForm) loginForm.style.display = "none"
+
+    const registerForm = document.getElementById("registerForm")
+    if (registerForm) registerForm.style.display = "none"
+  }
 }
 
 async function handleLogin(event) {
@@ -140,7 +186,15 @@ async function handleLogin(event) {
 
       updateUserInterface()
       closeAuthModal()
-      showToast("¡Bienvenido de vuelta! 🎉", "success")
+
+      if (!currentUser.isVerified) {
+        showToast("Por favor, verifica tu cuenta para acceder a todas las funciones", "warning")
+        setTimeout(() => {
+          showAuthModal("verify")
+        }, 1500)
+      } else {
+        showToast("¡Bienvenido de vuelta! 🎉", "success")
+      }
     } else {
       showToast(data.error || "Error al iniciar sesión", "error")
     }
@@ -178,13 +232,20 @@ async function handleRegister(event) {
     if (response.ok) {
       authToken = data.token
       currentUser = data.user
+      pendingVerification = true
 
       localStorage.setItem("authToken", authToken)
       localStorage.setItem("currentUser", JSON.stringify(currentUser))
 
       updateUserInterface()
       closeAuthModal()
-      showToast("¡Cuenta creada exitosamente! Bienvenido a RedactaFácil 🚀", "success")
+
+      showToast("¡Cuenta creada exitosamente! Revisa tu email para verificar tu cuenta", "success")
+
+      // Mostrar formulario de verificación
+      setTimeout(() => {
+        showAuthModal("verify")
+      }, 1500)
     } else {
       showToast(data.error || "Error al crear la cuenta", "error")
     }
@@ -197,9 +258,86 @@ async function handleRegister(event) {
   }
 }
 
+async function handleVerify(event) {
+  event.preventDefault()
+
+  const code = document.getElementById("verificationCode").value
+  const btn = document.getElementById("verifyBtn")
+
+  if (!code || code.length !== 6) {
+    showToast("Por favor, ingresa el código de 6 dígitos", "warning")
+    return
+  }
+
+  btn.disabled = true
+  btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Verificando...'
+
+  try {
+    const response = await fetch("https://redactafacil.onrender.com/api/auth/verify", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${authToken}`,
+      },
+      body: JSON.stringify({ code }),
+    })
+
+    const data = await response.json()
+
+    if (response.ok) {
+      currentUser = data.user
+      pendingVerification = false
+      localStorage.setItem("currentUser", JSON.stringify(currentUser))
+      updateUserInterface()
+      closeAuthModal()
+      showToast("¡Cuenta verificada exitosamente! 🎉", "success")
+    } else {
+      showToast(data.error || "Código inválido o expirado", "error")
+    }
+  } catch (error) {
+    console.error("Error en verificación:", error)
+    showToast("Error de conexión. Intenta nuevamente.", "error")
+  } finally {
+    btn.disabled = false
+    btn.innerHTML = '<i class="fas fa-check"></i> Verificar Cuenta'
+  }
+}
+
+async function resendVerificationCode() {
+  const btn = document.getElementById("resendCodeBtn")
+  if (!btn) return
+
+  btn.disabled = true
+  btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Enviando...'
+
+  try {
+    const response = await fetch("https://redactafacil.onrender.com/api/auth/resend-code", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${authToken}`,
+      },
+    })
+
+    const data = await response.json()
+
+    if (response.ok) {
+      showToast("Código de verificación reenviado a tu email", "success")
+    } else {
+      showToast(data.error || "Error al reenviar el código", "error")
+    }
+  } catch (error) {
+    console.error("Error al reenviar código:", error)
+    showToast("Error de conexión. Intenta nuevamente.", "error")
+  } finally {
+    btn.disabled = false
+    btn.innerHTML = "Reenviar código"
+  }
+}
+
 function logout() {
   authToken = null
   currentUser = null
+  pendingVerification = false
 
   localStorage.removeItem("authToken")
   localStorage.removeItem("currentUser")
@@ -223,10 +361,19 @@ function updateUserInterface() {
 
     userAvatar.textContent = currentUser.name.charAt(0).toUpperCase()
     userName.textContent = currentUser.name
-    userPlan.innerHTML = currentUser.isPremium ? '<span class="premium-badge">Premium</span>' : "Plan Básico"
+
+    // Mostrar estado de verificación y plan
+    let planText = currentUser.isPremium ? '<span class="premium-badge">Premium</span>' : "Plan Básico"
+    if (!currentUser.isVerified) {
+      planText += ' <span class="verification-badge">No verificado</span>'
+    }
+    userPlan.innerHTML = planText
 
     // Mostrar indicador de uso
     updateUsageIndicator()
+
+    // Mostrar banner de verificación si es necesario
+    updateVerificationBanner()
   } else {
     guestActions.style.display = "flex"
     userActions.style.display = "none"
@@ -236,6 +383,38 @@ function updateUserInterface() {
     if (usageIndicator) {
       usageIndicator.remove()
     }
+
+    // Eliminar banner de verificación si existe
+    const verificationBanner = document.getElementById("verificationBanner")
+    if (verificationBanner) {
+      verificationBanner.remove()
+    }
+  }
+}
+
+function updateVerificationBanner() {
+  // Eliminar banner existente si hay uno
+  const existingBanner = document.getElementById("verificationBanner")
+  if (existingBanner) {
+    existingBanner.remove()
+  }
+
+  // Si el usuario no está verificado, mostrar banner
+  if (currentUser && !currentUser.isVerified) {
+    const banner = document.createElement("div")
+    banner.id = "verificationBanner"
+    banner.className = "verification-banner"
+    banner.innerHTML = `
+      <div class="verification-banner-content">
+        <i class="fas fa-exclamation-circle"></i>
+        <span>Tu cuenta no está verificada. Verifica tu email para acceder a todas las funciones.</span>
+        <button onclick="showAuthModal('verify')" class="verify-btn">Verificar ahora</button>
+      </div>
+    `
+
+    // Insertar después del navbar
+    const navbar = document.querySelector(".navbar")
+    navbar.parentNode.insertBefore(banner, navbar.nextSibling)
   }
 }
 
@@ -295,6 +474,12 @@ async function upgradeToPremium() {
     return
   }
 
+  if (currentUser && !currentUser.isVerified) {
+    showToast("Debes verificar tu cuenta antes de actualizar a Premium", "warning")
+    showAuthModal("verify")
+    return
+  }
+
   try {
     showToast("Iniciando proceso de pago...", "info")
 
@@ -304,6 +489,12 @@ async function upgradeToPremium() {
         Authorization: `Bearer ${authToken}`,
         "Content-Type": "application/json",
       },
+      body: JSON.stringify({
+        descripcion: "Suscripción Premium RedactaFácil",
+        nombreComprador: currentUser.name.split(" ")[0],
+        apellidoComprador: currentUser.name.split(" ")[1] || "",
+        emailComprador: currentUser.email,
+      }),
     })
 
     const data = await response.json()
@@ -345,14 +536,9 @@ function iniciarVerificacionPago() {
       if (data.isPremium) {
         clearInterval(checkInterval)
 
-        // Actualizar datos del usuario
-        currentUser.isPremium = true
-        currentUser.usage.monthlyCount = 0
-        currentUser.usage.monthlyLimit = 100
-        localStorage.setItem("currentUser", JSON.stringify(currentUser))
+        // Actualizar datos del usuario desde el servidor
+        await refreshUserData()
 
-        // Actualizar interfaz
-        updateUserInterface()
         showToast("¡Felicidades! Tu cuenta ha sido actualizada a Premium 👑", "success")
       }
     } catch (error) {
@@ -379,6 +565,9 @@ function loadUserFromStorage() {
       authToken = savedToken
       currentUser = JSON.parse(savedUser)
       updateUserInterface()
+
+      // Refrescar datos del usuario desde el servidor
+      refreshUserData()
     } catch (error) {
       console.error("Error loading user from storage:", error)
       localStorage.removeItem("authToken")
@@ -503,6 +692,13 @@ async function generarCarta() {
     return
   }
 
+  // Verificar si la cuenta está verificada
+  if (currentUser && !currentUser.isVerified) {
+    showToast("Debes verificar tu cuenta para generar cartas", "warning")
+    showAuthModal("verify")
+    return
+  }
+
   const datos = {
     tipo: currentType,
     nombre: document.getElementById("nombre").value.trim(),
@@ -601,6 +797,11 @@ async function generarCarta() {
             }
           }, 2000)
         }
+      } else if (response.status === 403 && data.error === "Cuenta no verificada") {
+        showToast(data.message || "Debes verificar tu cuenta para generar cartas", "warning")
+        setTimeout(() => {
+          showAuthModal("verify")
+        }, 1500)
       } else {
         showToast(data.error || "Error al generar la carta", "error")
       }
@@ -757,6 +958,49 @@ function downloadTxt() {
   showToast("Carta descargada como archivo TXT", "success")
 }
 
+function downloadPDF() {
+  // Verificar si jsPDF está disponible
+  if (typeof window.jspdf === "undefined") {
+    showToast("Error: La biblioteca PDF no está disponible", "error")
+    return
+  }
+
+  const resultado = document.getElementById("resultado")
+  const text = resultado.textContent
+  const filename = `carta_${currentType}_${new Date().toISOString().split("T")[0]}.pdf`
+
+  try {
+    const { jsPDF } = window.jspdf
+    const doc = new jsPDF()
+
+    // Configuración de página
+    const pageWidth = doc.internal.pageSize.getWidth()
+    const margin = 20
+    const maxWidth = pageWidth - 2 * margin
+
+    // Añadir título
+    doc.setFontSize(16)
+    doc.text(`Carta de ${currentType.charAt(0).toUpperCase() + currentType.slice(1)}`, margin, margin)
+
+    // Añadir fecha
+    doc.setFontSize(10)
+    doc.text(`Generado el: ${new Date().toLocaleDateString()}`, margin, margin + 10)
+
+    // Añadir contenido principal
+    doc.setFontSize(12)
+    const splitText = doc.splitTextToSize(text, maxWidth)
+    doc.text(splitText, margin, margin + 20)
+
+    // Guardar PDF
+    doc.save(filename)
+
+    showToast("Carta descargada como archivo PDF", "success")
+  } catch (error) {
+    console.error("Error al generar PDF:", error)
+    showToast("Error al generar el PDF", "error")
+  }
+}
+
 function printLetter() {
   const resultado = document.getElementById("resultado")
   const printWindow = window.open("", "_blank")
@@ -856,6 +1100,7 @@ function loadHistory() {
 
 function updateHistoryDisplay() {
   const historyList = document.getElementById("historyList")
+  if (!historyList) return
 
   if (letterHistory.length === 0) {
     historyList.innerHTML =
@@ -996,7 +1241,10 @@ document.addEventListener("keydown", (e) => {
 })
 
 // Auto-resize para textarea
-document.getElementById("motivo").addEventListener("input", function () {
-  this.style.height = "auto"
-  this.style.height = Math.min(this.scrollHeight, 300) + "px"
-})
+const motivoTextarea = document.getElementById("motivo")
+if (motivoTextarea) {
+  motivoTextarea.addEventListener("input", function () {
+    this.style.height = "auto"
+    this.style.height = Math.min(this.scrollHeight, 300) + "px"
+  })
+}

@@ -73,6 +73,11 @@ window.iniciarPagoPremium = async () => {
         Authorization: `Bearer ${authToken}`,
         "Content-Type": "application/json",
       },
+        body: JSON.stringify({
+    descripcion: "Suscripción Premium RedactaFácil",
+    nombreComprador: user.name.split(" ")[0],        // por ejemplo, "Juan"
+    apellidoComprador: user.name.split(" ")[1] || "", // por ejemplo, "Pérez"
+    emailComprador: user.email  })
     })
 
     const data = await response.json()
