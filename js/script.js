@@ -698,7 +698,10 @@ async function generarCarta() {
     showAuthModal("verify")
     return
   }
-
+  selected =document.querySelector('.active')
+  if (selected.getAttribute("data-type") === "customizada") {
+      currentType =document.getElementById("customizada").value
+  }
   const datos = {
     tipo: currentType,
     nombre: document.getElementById("nombre").value.trim(),
@@ -710,7 +713,7 @@ async function generarCarta() {
     tono: document.getElementById("tono").value,
     contacto: document.getElementById("contacto").value.trim(),
   }
-
+  console.log("Datos:", datos);
   // Validación mejorada
   if (!datos.nombre || !datos.empresa || !datos.motivo) {
     showToast("Por favor, completa todos los campos obligatorios (*)", "error")
@@ -896,7 +899,7 @@ function useExample(type) {
     if (templateCard) {
       templateCard.click()
     }
-
+   
     // Llenar el formulario con los datos del ejemplo
     document.getElementById("nombre").value = example.nombre
     document.getElementById("cargo").value = example.cargo
