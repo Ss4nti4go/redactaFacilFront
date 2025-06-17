@@ -1,376 +1,1620 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nexora - Tu Hogar, Tu Futuro</title>
-    <link rel="stylesheet" href="./assets/css/styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1107447325405006"
+     crossorigin="anonymous"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="RedactaFácil te permite crear cartas y correos profesionales en segundos con inteligencia artificial. Ideal para solicitudes, renuncias, recomendaciones y más.">
+<meta property="og:title" content="Generador Profesional de Cartas y Correos | RedactaFácil" />
+<meta property="og:description" content="Crea cartas formales en segundos con IA. Plantillas para renuncia, solicitud, recomendación y más." />
+<meta property="og:image" content="https://www.redactafacil.com/img/generador-cartas-ia.jpg" />
+<meta property="og:url" content="https://www.redactafacil.com/" />
+<meta property="og:type" content="website" />
 
-    <link rel="icon" href="./assets/img/redactLogo.png" type="image/x-icon">
+<!-- Meta Twitter -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="RedactaFácil | Generador de Cartas por IA">
+<meta name="twitter:description" content="Tu carta profesional en segundos. Gratis y personalizado.">
+<meta name="twitter:image" content="https://www.redactafacil.com/img/og-image.jpg">
+<title>Generador Profesional de Cartas y Correos | RedactaFácil</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+<style>
+    :root {
+        --primary: #6366f1;
+        --primary-dark: #4f46e5;
+        --secondary: #f1f5f9;
+        --accent: #10b981;
+        --warning: #f59e0b;
+        --danger: #ef4444;
+        --text-primary: #1e293b;
+        --text-secondary: #64748b;
+        --text-muted: #94a3b8;
+        --background: #ffffff;
+        --surface: #f8fafc;
+        --surface-elevated: #ffffff;
+        --border: #e2e8f0;
+        --border-light: #f1f5f9;
+        --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+        --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        --gradient-accent: linear-gradient(135deg, #10b981 0%, #059669 100%);
+        --border-radius: 12px;
+        --border-radius-lg: 16px;
+    }
+
+    [data-theme="dark"] {
+        --text-primary: #f1f5f9;
+        --text-secondary: #94a3b8;
+        --text-muted: #64748b;
+        --background: #0f172a;
+        --surface: #1e293b;
+        --surface-elevated: #334155;
+        --border: #334155;
+        --border-light: #475569;
+    }
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        background: var(--background);
+        color: var(--text-primary);
+        line-height: 1.6;
+        transition: all 0.3s ease;
+    }
+
+    .navbar {
+        background: var(--surface-elevated);
+        border-bottom: 1px solid var(--border);
+        padding: 1rem 0;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        backdrop-filter: blur(10px);
+    }
+
+    .navbar-content {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 2rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .logo {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--primary);
+    }
+
+    .nav-actions {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .theme-toggle {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 50px;
+        padding: 0.5rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+    }
+
+    .theme-toggle:hover {
+        transform: scale(1.05);
+        background: var(--border-light);
+    }
+
+    .container {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 2rem;
+    }
+
+    .hero {
+        text-align: center;
+        margin-bottom: 4rem;
+        padding: 3rem 0;
+        background: var(--gradient-primary);
+        border-radius: var(--border-radius-lg);
+        color: white;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .hero::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="1" fill="white" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+        opacity: 0.3;
+    }
+
+    .hero-content {
+        position: relative;
+        z-index: 1;
+    }
+
+    .hero h1 {
+        font-size: 3rem;
+        font-weight: 800;
+        margin-bottom: 1rem;
+        text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .hero p {
+        font-size: 1.25rem;
+        opacity: 0.9;
+        max-width: 600px;
+        margin: 0 auto 2rem;
+    }
+
+    .hero-stats {
+        display: flex;
+        justify-content: center;
+        gap: 3rem;
+        margin-top: 2rem;
+    }
+
+    .stat {
+        text-align: center;
+    }
+
+    .stat-number {
+        font-size: 2rem;
+        font-weight: 700;
+        display: block;
+    }
+
+    .stat-label {
+        font-size: 0.875rem;
+        opacity: 0.8;
+    }
+
+    .main-layout {
+        display: grid;
+        grid-template-columns: 1fr 2fr;
+        gap: 3rem;
+        margin-bottom: 4rem;
+    }
+
+    .sidebar {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+    }
+
+    .card {
+        background: var(--surface-elevated);
+        border-radius: var(--border-radius-lg);
+        padding: 2rem;
+        box-shadow: var(--shadow);
+        border: 1px solid var(--border);
+        transition: all 0.3s ease;
+    }
+
+    .card:hover {
+        box-shadow: var(--shadow-lg);
+        transform: translateY(-2px);
+    }
+
+    .card-header {
+        margin-bottom: 1.5rem;
+    }
+
+    .card-title {
+        font-size: 1.25rem;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .card-description {
+        color: var(--text-secondary);
+        font-size: 0.875rem;
+    }
+
+    .templates-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+        gap: 1rem;
+        margin-bottom: 2rem;
+    }
+
+    .template-card {
+        background: var(--surface);
+        border: 2px solid var(--border);
+        border-radius: var(--border-radius);
+        padding: 1rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .template-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+        transition: left 0.5s;
+    }
+
+    .template-card:hover::before {
+        left: 100%;
+    }
+
+    .template-card:hover {
+        border-color: var(--primary);
+        transform: translateY(-2px);
+        box-shadow: var(--shadow);
+    }
+
+    .template-card.active {
+        border-color: var(--primary);
+        background: rgba(99, 102, 241, 0.05);
+        box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+    }
+
+    .template-icon {
+        font-size: 2rem;
+        margin-bottom: 0.5rem;
+        display: block;
+    }
+
+    .template-title {
+        font-weight: 600;
+        margin-bottom: 0.25rem;
+        font-size: 0.875rem;
+    }
+
+    .template-desc {
+        font-size: 0.75rem;
+        color: var(--text-secondary);
+        line-height: 1.3;
+    }
+
+    .form-section {
+        background: var(--surface-elevated);
+        border-radius: var(--border-radius-lg);
+        padding: 2rem;
+        box-shadow: var(--shadow);
+        border: 1px solid var(--border);
+    }
+
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
+
+    .form-label {
+        display: block;
+        font-weight: 500;
+        margin-bottom: 0.5rem;
+        color: var(--text-primary);
+        font-size: 0.875rem;
+    }
+
+    .form-input, .form-select, .form-textarea {
+        width: 100%;
+        padding: 0.75rem 1rem;
+        border: 2px solid var(--border);
+        border-radius: var(--border-radius);
+        font-size: 1rem;
+        background: var(--background);
+        color: var(--text-primary);
+        transition: all 0.3s ease;
+        font-family: inherit;
+    }
+
+    .form-input:focus, .form-select:focus, .form-textarea:focus {
+        outline: none;
+        border-color: var(--primary);
+        box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+    }
+
+    .form-textarea {
+        resize: vertical;
+        min-height: 120px;
+        font-family: inherit;
+    }
+
+    .form-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+    }
+
+    .generate-btn {
+        width: 100%;
+        background: var(--gradient-primary);
+        color: white;
+        border: none;
+        padding: 1rem 2rem;
+        border-radius: var(--border-radius);
+        font-size: 1.1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+    }
+
+    .generate-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-lg);
+    }
+
+    .generate-btn:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+        transform: none;
+    }
+
+    .generate-btn .loading {
+        display: none;
+    }
+
+    .generate-btn.loading .loading {
+        display: inline-block;
+        animation: spin 1s linear infinite;
+    }
+
+    .generate-btn.loading .text {
+        display: none;
+    }
+
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+
+    .result-section {
+        background: var(--surface-elevated);
+        border-radius: var(--border-radius-lg);
+        padding: 2rem;
+        box-shadow: var(--shadow);
+        border: 1px solid var(--border);
+        min-height: 600px;
+    }
+
+    .result-content {
+        background: var(--background);
+        border: 2px solid var(--border);
+        border-radius: var(--border-radius);
+        padding: 2rem;
+        min-height: 500px;
+        white-space: pre-line;
+        font-family: 'Georgia', serif;
+        line-height: 1.8;
+        position: relative;
+        font-size: 1rem;
+        color: var(--text-primary);
+        overflow-y: auto;
+    }
+
+    .result-content.empty {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--text-secondary);
+        font-style: italic;
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .result-content.editable {
+        outline: none;
+    }
+
+    .result-content.editable:focus {
+        border-color: var(--primary);
+        box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+    }
+
+    .empty-icon {
+        font-size: 3rem;
+        opacity: 0.5;
+    }
+
+    .result-actions {
+        display: flex;
+        gap: 1rem;
+        margin-top: 1rem;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        flex-wrap: wrap;
+    }
+
+    .result-actions.show {
+        opacity: 1;
+    }
+
+    .action-btn {
+        padding: 0.5rem 1rem;
+        border: 2px solid var(--primary);
+        background: transparent;
+        color: var(--primary);
+        border-radius: var(--border-radius);
+        cursor: pointer;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 0.875rem;
+    }
+
+    .action-btn:hover {
+        background: var(--primary);
+        color: white;
+        transform: translateY(-1px);
+    }
+
+    .toast {
+        position: fixed;
+        top: 2rem;
+        right: 2rem;
+        background: var(--accent);
+        color: white;
+        padding: 1rem 1.5rem;
+        border-radius: var(--border-radius);
+        box-shadow: var(--shadow-lg);
+        transform: translateX(400px);
+        transition: transform 0.3s ease;
+        z-index: 1000;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .toast.show {
+        transform: translateX(0);
+    }
+
+    .toast.error {
+        background: var(--danger);
+    }
+
+    .toast.warning {
+        background: var(--warning);
+    }
+
+    .tips-section {
+        background: var(--surface-elevated);
+        border-radius: var(--border-radius-lg);
+        padding: 2rem;
+        box-shadow: var(--shadow);
+        border: 1px solid var(--border);
+    }
+
+    .tips-grid {
+        display: grid;
+        gap: 1rem;
+    }
+
+    .tip-item {
+        background: var(--surface);
+        padding: 1rem;
+        border-radius: var(--border-radius);
+        border-left: 4px solid var(--primary);
+    }
+
+    .tip-title {
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+        color: var(--primary);
+    }
+
+    .examples-section {
+        margin-top: 3rem;
+    }
+
+    .examples-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+        margin-top: 2rem;
+    }
+
+    .example-card {
+        background: var(--surface-elevated);
+        border-radius: var(--border-radius-lg);
+        padding: 1.5rem;
+        box-shadow: var(--shadow);
+        border: 1px solid var(--border);
+        transition: all 0.3s ease;
+    }
+
+    .example-card:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-lg);
+    }
+
+    .example-title {
+        font-weight: 600;
+        margin-bottom: 1rem;
+        color: var(--primary);
+    }
+
+    .example-preview {
+        background: var(--surface);
+        padding: 1rem;
+        border-radius: var(--border-radius);
+        font-size: 0.875rem;
+        line-height: 1.6;
+        color: var(--text-secondary);
+        border-left: 3px solid var(--primary);
+    }
+
+    .use-example-btn {
+        margin-top: 1rem;
+        padding: 0.5rem 1rem;
+        background: var(--primary);
+        color: white;
+        border: none;
+        border-radius: var(--border-radius);
+        cursor: pointer;
+        font-size: 0.875rem;
+        transition: all 0.3s ease;
+    }
+
+    .use-example-btn:hover {
+        background: var(--primary-dark);
+        transform: translateY(-1px);
+    }
+
+    .footer {
+        margin-top: 4rem;
+        padding: 3rem 0;
+        border-top: 1px solid var(--border);
+        text-align: center;
+        color: var(--text-secondary);
+    }
+
+    .footer-content {
+        max-width: 800px;
+        margin: 0 auto;
+    }
+
+    .footer h3 {
+        color: var(--text-primary);
+        margin-bottom: 1rem;
+    }
+
+    .footer-links {
+        display: flex;
+        justify-content: center;
+        gap: 2rem;
+        margin: 2rem 0;
+        flex-wrap: wrap;
+    }
+
+    .footer-link {
+        color: var(--text-secondary);
+        text-decoration: none;
+        transition: color 0.3s ease;
+    }
+
+    .footer-link:hover {
+        color: var(--primary);
+    }
+
+    @media (max-width: 1024px) {
+        .main-layout {
+            grid-template-columns: 1fr;
+            gap: 2rem;
+        }
+        
+        .hero-stats {
+            gap: 2rem;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .container {
+            padding: 1rem;
+        }
+
+        .navbar-content {
+            padding: 0 1rem;
+        }
+
+        .hero h1 {
+            font-size: 2rem;
+        }
+
+        .hero p {
+            font-size: 1rem;
+        }
+
+        .hero-stats {
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .form-row {
+            grid-template-columns: 1fr;
+        }
+
+        .templates-grid {
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+        }
+
+        .examples-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .footer-links {
+            flex-direction: column;
+            gap: 1rem;
+        }
+    }
+
+    .fade-in {
+        animation: fadeIn 0.5s ease-in;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    .pulse {
+        animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.5; }
+    }
+
+    .api-status {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.25rem 0.75rem;
+        border-radius: 50px;
+        font-size: 0.75rem;
+        font-weight: 500;
+        margin-left: 1rem;
+    }
+
+    .api-status.online {
+        background-color: rgba(16, 185, 129, 0.1);
+        color: var(--accent);
+    }
+
+    .api-status.offline {
+        background-color: rgba(239, 68, 68, 0.1);
+        color: var(--danger);
+    }
+
+    .api-status-indicator {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+    }
+
+    .api-status.online .api-status-indicator {
+        background-color: var(--accent);
+    }
+
+    .api-status.offline .api-status-indicator {
+        background-color: var(--danger);
+    }
+
+    .history-item {
+        padding: 0.75rem;
+        border-radius: var(--border-radius);
+        background: var(--surface);
+        margin-bottom: 0.5rem;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        border: 1px solid var(--border);
+    }
+
+    .history-item:hover {
+        background: var(--border-light);
+        transform: translateY(-1px);
+    }
+
+    .history-item-title {
+        font-weight: 600;
+        font-size: 0.875rem;
+        margin-bottom: 0.25rem;
+    }
+
+    .history-item-date {
+        font-size: 0.75rem;
+        color: var(--text-secondary);
+    }
+
+    .history-section {
+        margin-top: 1rem;
+    }
+
+    .history-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 0.75rem;
+    }
+
+    .history-title {
+        font-size: 0.875rem;
+        font-weight: 600;
+        color: var(--text-secondary);
+    }
+
+    .clear-history {
+        font-size: 0.75rem;
+        color: var(--primary);
+        cursor: pointer;
+        background: none;
+        border: none;
+    }
+
+    .clear-history:hover {
+        text-decoration: underline;
+    }
+
+    /* Estilos para autenticación */
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 1000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0,0,0,0.5);
+        backdrop-filter: blur(5px);
+    }
+
+    .modal-content {
+        background-color: var(--surface-elevated);
+        margin: 5% auto;
+        padding: 2rem;
+        border-radius: var(--border-radius-lg);
+        width: 90%;
+        max-width: 400px;
+        box-shadow: var(--shadow-lg);
+        position: relative;
+        animation: modalSlideIn 0.3s ease-out;
+    }
+
+    @keyframes modalSlideIn {
+        from {
+            opacity: 0;
+            transform: translateY(-50px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .modal-header {
+        text-align: center;
+        margin-bottom: 2rem;
+    }
+
+    .modal-title {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        margin-bottom: 0.5rem;
+    }
+
+    .modal-subtitle {
+        color: var(--text-secondary);
+        font-size: 0.875rem;
+    }
+
+    .close {
+        position: absolute;
+        right: 1rem;
+        top: 1rem;
+        font-size: 1.5rem;
+        cursor: pointer;
+        color: var(--text-secondary);
+        transition: color 0.3s ease;
+    }
+
+    .close:hover {
+        color: var(--danger);
+    }
+
+    .auth-form {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .auth-input {
+        width: 100%;
+        padding: 0.75rem 1rem;
+        border: 2px solid var(--border);
+        border-radius: var(--border-radius);
+        font-size: 1rem;
+        background: var(--background);
+        color: var(--text-primary);
+        transition: all 0.3s ease;
+    }
+
+    .auth-input:focus {
+        outline: none;
+        border-color: var(--primary);
+        box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+    }
+
+    .auth-btn {
+        width: 100%;
+        background: var(--gradient-primary);
+        color: white;
+        border: none;
+        padding: 0.75rem 1rem;
+        border-radius: var(--border-radius);
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .auth-btn:hover {
+        transform: translateY(-1px);
+        box-shadow: var(--shadow);
+    }
+
+    .auth-btn:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+        transform: none;
+    }
+
+    .auth-switch {
+        text-align: center;
+        margin-top: 1rem;
+        color: var(--text-secondary);
+    }
+
+    .auth-switch a {
+        color: var(--primary);
+        text-decoration: none;
+        font-weight: 500;
+    }
+
+    .auth-switch a:hover {
+        text-decoration: underline;
+    }
+
+    .user-info {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        background: var(--surface);
+        padding: 0.5rem 1rem;
+        border-radius: 50px;
+        border: 1px solid var(--border);
+    }
+
+    .user-avatar {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background: var(--gradient-primary);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-weight: 600;
+        font-size: 0.875rem;
+    }
+
+    .user-details {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .user-name {
+        font-weight: 600;
+        font-size: 0.875rem;
+        color: var(--text-primary);
+    }
+
+    .user-plan {
+        font-size: 0.75rem;
+        color: var(--text-secondary);
+    }
+
+    .premium-badge {
+        background: var(--gradient-accent);
+        color: white;
+        padding: 0.125rem 0.5rem;
+        border-radius: 50px;
+        font-size: 0.75rem;
+        font-weight: 600;
+    }
+
+    .verification-badge {
+        background: var(--warning);
+        color: white;
+        padding: 0.125rem 0.5rem;
+        border-radius: 50px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        margin-left: 0.5rem;
+    }
+
+    .verification-banner {
+        background: rgba(245, 158, 11, 0.1);
+        border: 1px solid var(--warning);
+        padding: 0.75rem 1rem;
+        margin-bottom: 1rem;
+        border-radius: var(--border-radius);
+    }
+
+    .verification-banner-content {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        color: var(--warning);
+    }
+
+    .verification-banner i {
+        font-size: 1.25rem;
+    }
+
+    .verify-btn {
+        background: var(--warning);
+        color: white;
+        border: none;
+        padding: 0.5rem 1rem;
+        border-radius: var(--border-radius);
+        font-size: 0.875rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .verify-btn:hover {
+        transform: translateY(-1px);
+        box-shadow: var(--shadow);
+    }
+
+    .verification-code-input {
+        display: flex;
+        gap: 0.5rem;
+        justify-content: center;
+        margin: 1.5rem 0;
+    }
+
+    .code-digit {
+        width: 3rem;
+        height: 3.5rem;
+        border: 2px solid var(--border);
+        border-radius: var(--border-radius);
+        font-size: 1.5rem;
+        text-align: center;
+        font-weight: 600;
+        background: var(--background);
+        color: var(--text-primary);
+        transition: all 0.3s ease;
+    }
+
+    .code-digit:focus {
+        outline: none;
+        border-color: var(--primary);
+        box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+    }
+
+    .resend-code {
+        text-align: center;
+        margin-top: 1rem;
+        font-size: 0.875rem;
+        color: var(--text-secondary);
+    }
+
+    .resend-code button {
+        background: none;
+        border: none;
+        color: var(--primary);
+        font-weight: 500;
+        cursor: pointer;
+        padding: 0;
+        font-size: 0.875rem;
+    }
+
+    .resend-code button:hover {
+        text-decoration: underline;
+    }
+
+    .usage-indicator {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: var(--border-radius);
+        padding: 1rem;
+        margin-bottom: 1rem;
+    }
+
+    .usage-bar {
+        width: 100%;
+        height: 8px;
+        background: var(--border-light);
+        border-radius: 4px;
+        overflow: hidden;
+        margin-top: 0.5rem;
+    }
+
+    .usage-fill {
+        height: 100%;
+        background: var(--gradient-primary);
+        transition: width 0.3s ease;
+    }
+
+    .usage-fill.warning {
+        background: var(--gradient-accent);
+    }
+
+    .usage-fill.danger {
+        background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+    }
+
+    .logout-btn {
+        background: none;
+        border: 1px solid var(--border);
+        color: var(--text-secondary);
+        padding: 0.5rem;
+        border-radius: var(--border-radius);
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .logout-btn:hover {
+        background: var(--danger);
+        color: white;
+        border-color: var(--danger);
+    }
+
+    .upgrade-btn {
+        background: var(--gradient-accent);
+        color: white;
+        border: none;
+        padding: 0.5rem 1rem;
+        border-radius: var(--border-radius);
+        font-size: 0.875rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .upgrade-btn:hover {
+        transform: translateY(-1px);
+        box-shadow: var(--shadow);
+    }
+
+    .nav-auth-btn {
+        padding: 0.5rem 1rem;
+        font-size: 0.875rem;
+        background: var(--gradient-primary);
+        color: white;
+        border: none;
+        border-radius: var(--border-radius);
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .nav-auth-btn:hover {
+        transform: translateY(-1px);
+        box-shadow: var(--shadow);
+    }
+
+    /* Estilos para el editor */
+    .edit-indicator {
+        position: absolute;
+        top: 0.5rem;
+        right: 0.5rem;
+        background: var(--accent);
+        color: white;
+        padding: 0.25rem 0.5rem;
+        border-radius: var(--border-radius);
+        font-size: 0.75rem;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .result-content:focus .edit-indicator {
+        opacity: 1;
+    }
+</style>
 </head>
 <body>
-    <!-- Navbar -->
-    <nav class="navbar" id="navbar">
-        <div class="nav-container">
-            <div class="nav-logo">
-                <img src="./assets/img/logo.png" class="nav-logo-img" alt="Logo">
-                <span>Nexora</span>
-            </div>
-            <ul class="nav-menu" id="nav-menu">
-                <li><a href="#inicio" class="nav-link">Inicio</a></li>
-                <li><a href="#cooperativa" class="nav-link">Cooperativa</a></li>
-                <li><a href="#software" class="nav-link">Software</a></li>
-                <li><a href="#testimonios" class="nav-link">Testimonios</a></li>
-                <li><a href="#contacto" class="nav-link">Contacto</a></li>
-                <li><button class="btn btn-primary">Ingresar</button></li>
-            </ul>
-            <div class="nav-toggle" id="nav-toggle">
-                <span class="bar"></span>
-                <span class="bar"></span>
-                <span class="bar"></span>
-            </div>
-        </div>
-    </nav>
-
-    <!-- Hero Section -->
-    <section id="inicio" class="hero">
-        <div class="hero-container">
-            <div class="hero-content">
-                <h1 class="hero-title">
-                    Tu <span class="gradient-text">Hogar Propio</span><br>
-                    Es Posible en Uruguay
-                </h1>
-                <p class="hero-description">
-                    Únete a nuestra cooperativa de vivienda y accede a tu casa propia con nuestro sistema de ahorro y préstamo. 
-                    Además, gestiona todo con nuestro software especializado.
-                </p>
-                <div class="hero-buttons">
-                    <button class="btn btn-primary" onclick="scrollToSection('cooperativa')">
-                        <i class="fas fa-home"></i>
-                        Conocer Cooperativa
-                    </button>
-                    <button class="btn btn-secondary" onclick="scrollToSection('software')">
-                        <i class="fas fa-laptop"></i>
-                        Ver Software
-                    </button>
-                </div>
-                <div class="hero-stats">
-                    <div class="stat">
-                        <span class="stat-number">500+</span>
-                        <span class="stat-label">Familias con hogar</span>
-                    </div>
-                    <div class="stat">
-                        <span class="stat-number">15</span>
-                        <span class="stat-label">Años de experiencia</span>
-                    </div>
-                    <div class="stat">
-                        <span class="stat-number">100%</span>
-                        <span class="stat-label">Transparencia</span>
-                    </div>
-                </div>
-            </div>
-            <div class="hero-image">
-                <div class="floating-card card-1">
-                    <i class="fas fa-key"></i>
-                    <span>Tu llave al futuro</span>
-                </div>
-                <div class="floating-card card-2">
-                    <i class="fas fa-chart-line"></i>
-                    <span>Ahorro inteligente</span>
-                </div>
-                <div class="floating-card card-3">
-                    <i class="fas fa-users"></i>
-                    <span>Comunidad unida</span>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Cooperativa Section -->
-    <section id="cooperativa" class="section">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Cooperativa de Vivienda</h2>
-                <p class="section-subtitle">El camino más seguro hacia tu hogar propio</p>
-            </div>
-            <div class="features-grid">
-                <div class="feature-card" data-aos="fade-up">
-                    <div class="feature-icon">
-                        <i class="fas fa-piggy-bank"></i>
-                    </div>
-                    <h3>Sistema de Ahorro</h3>
-                    <p>Ahorra de forma sistemática con cuotas accesibles y obtén tu vivienda sin necesidad de grandes capitales iniciales.</p>
-                </div>
-                <div class="feature-card" data-aos="fade-up" data-aos-delay="100">
-                    <div class="feature-icon">
-                        <i class="fas fa-handshake"></i>
-                    </div>
-                    <h3>Ayuda Mutua</h3>
-                    <p>Trabajamos juntos en la construcción, reduciendo costos y fortaleciendo los lazos comunitarios.</p>
-                </div>
-                <div class="feature-card" data-aos="fade-up" data-aos-delay="200">
-                    <div class="feature-icon">
-                        <i class="fas fa-shield-alt"></i>
-                    </div>
-                    <h3>Propiedad Colectiva</h3>
-                    <p>Sistema de propiedad colectiva que garantiza la permanencia y accesibilidad de la vivienda.</p>
-                </div>
-                <div class="feature-card" data-aos="fade-up" data-aos-delay="300">
-                    <div class="feature-icon">
-                        <i class="fas fa-map-marked-alt"></i>
-                    </div>
-                    <h3>Ubicaciones Premium</h3>
-                    <p>Terrenos estratégicamente ubicados en Montevideo y el interior del país con todos los servicios.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Software Section -->
-    <section id="software" class="section section-dark">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Software de Gestión Nexora</h2>
-                <p class="section-subtitle">Tecnología avanzada para administrar tu cooperativa</p>
-            </div>
-            <div class="software-content">
-                <div class="software-features">
-                    <div class="software-feature" data-aos="fade-right">
-                        <div class="feature-icon">
-                            <i class="fas fa-users-cog"></i>
-                        </div>
-                        <div class="feature-content">
-                            <h3>Gestión de Socios</h3>
-                            <p>Administra información completa de todos los cooperativistas, pagos, y estado de membresía.</p>
-                        </div>
-                    </div>
-                    <div class="software-feature" data-aos="fade-right" data-aos-delay="100">
-                        <div class="feature-icon">
-                            <i class="fa-solid fa-calculator fa-sm"></i>
-                        </div>
-                        <div class="feature-content">
-                            <h3>Control Financiero</h3>
-                            <p>Seguimiento detallado de ingresos, egresos, cuotas y estado financiero en tiempo real.</p>
-                        </div>
-                    </div>
-                    <div class="software-feature" data-aos="fade-right" data-aos-delay="200">
-                        <div class="feature-icon">
-                            <i class="fas fa-chart-pie"></i>
-                        </div>
-                        <div class="feature-content">
-                            <h3>Reportes Inteligentes</h3>
-                            <p>Genera reportes automáticos para asambleas, auditorías y toma de decisiones estratégicas.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="software-demo" data-aos="fade-left">
-                    <div class="demo-screen">
-                      
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Testimonios Section -->
-    <section id="testimonios" class="section">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Lo que dicen nuestros cooperativistas</h2>
-                <p class="section-subtitle">Historias reales de familias que lograron su hogar</p>
-            </div>
-            <div class="testimonials-grid">
-                <div class="testimonial-card" data-aos="fade-up">
-                    <div class="testimonial-content">
-                        <div class="stars">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                        </div>
-                        <p>"Después de 5 años ahorrando, finalmente tenemos nuestra casa. El proceso fue transparente y el software nos permitía ver todo en tiempo real."</p>
-                    </div>
-                    <div class="testimonial-author">
-                        <div class="author-avatar">
-                            <i class="fas fa-user"></i>
-                        </div>
-                        <div class="author-info">
-                            <h4>María González</h4>
-                            <span>Cooperativista desde 2018</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="testimonial-card" data-aos="fade-up" data-aos-delay="100">
-                    <div class="testimonial-content">
-                        <div class="stars">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                           
-                        </div>
-                        <p>"La experiencia de ayuda mutua fue increíble. No solo construimos casas, construimos una comunidad. El software facilitó toda la gestión."</p>
-                    </div>
-                    <div class="testimonial-author">
-                        <div class="author-avatar">
-                            <i class="fas fa-user"></i>
-                        </div>
-                        <div class="author-info">
-                            <h4>Joaquin Rodríguez</h4>
-                            <span>Cooperativista desde 2019</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="testimonial-card" data-aos="fade-up" data-aos-delay="200">
-                    <div class="testimonial-content">
-                        <div class="stars">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                        </div>
-                        <p>"Como administrador de la cooperativa, el software de Nexora nos cambió la vida. Todo automatizado y transparente para todos los socios."</p>
-                    </div>
-                    <div class="testimonial-author">
-                        <div class="author-avatar">
-                            <i class="fas fa-user"></i>
-                        </div>
-                        <div class="author-info">
-                            <h4>Ana Martínez</h4>
-                            <span>Administradora</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
+<!-- Modal de Autenticación -->
+<div id="authModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeAuthModal()">&times;</span>
         
+        <!-- Login Form -->
+        <div id="loginForm">
+            <div class="modal-header">
+                <h2 class="modal-title">Iniciar Sesión</h2>
+                <p class="modal-subtitle">Accede a tu cuenta para generar cartas</p>
+            </div>
+            <form class="auth-form" onsubmit="handleLogin(event)">
+                <input type="email" class="auth-input" placeholder="Email" required id="loginEmail">
+                <input type="password" class="auth-input" placeholder="Contraseña" required id="loginPassword">
+                <button type="submit" class="auth-btn" id="loginBtn">
+                    <i class="fas fa-sign-in-alt"></i> Iniciar Sesión
+                </button>
+            </form>
+            <div class="auth-switch">
+                ¿No tienes cuenta? <a href="#" onclick="showRegisterForm()">Regístrate aquí</a>
+            </div>
+        </div>
+
+        <!-- Register Form -->
+        <div id="registerForm" style="display: none;">
+            <div class="modal-header">
+                <h2 class="modal-title">Crear Cuenta</h2>
+                <p class="modal-subtitle">Únete a RedactaFácil y comienza a generar cartas</p>
+            </div>
+            <form class="auth-form" onsubmit="handleRegister(event)">
+                <input type="text" class="auth-input" placeholder="Nombre completo" required id="registerName">
+                <input type="email" class="auth-input" placeholder="Email" required id="registerEmail">
+                <input type="password" class="auth-input" placeholder="Contraseña (mín. 6 caracteres)" required id="registerPassword" minlength="6">
+                <button type="submit" class="auth-btn" id="registerBtn">
+                    <i class="fas fa-user-plus"></i> Crear Cuenta
+                </button>
+            </form>
+            <div class="auth-switch">
+                ¿Ya tienes cuenta? <a href="#" onclick="showLoginForm()">Inicia sesión aquí</a>
+            </div>
+        </div>
+
+        <!-- Verify Form -->
+        <div id="verifyForm" style="display: none;">
+            <div class="modal-header">
+                <h2 class="modal-title">Verificar Cuenta</h2>
+                <p class="modal-subtitle">Ingresa el código de 6 dígitos enviado a tu email</p>
+            </div>
+            <form class="auth-form" onsubmit="handleVerify(event)">
+                <input type="text" class="auth-input" placeholder="Código de verificación" required id="verificationCode" maxlength="6" pattern="[0-9]{6}">
+                <button type="submit" class="auth-btn" id="verifyBtn">
+                    <i class="fas fa-check"></i> Verificar Cuenta
+                </button>
+            </form>
+            <div class="resend-code">
+                ¿No recibiste el código? 
+                <button id="resendCodeBtn" onclick="resendVerificationCode()">Reenviar código</button>
+            </div>
+            <div class="auth-switch">
+                <a href="#" onclick="showLoginForm()">Volver a inicio de sesión</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Navbar -->
+<nav class="navbar">
+    <div class="navbar-content">
+        <div class="logo">
+            <i class="fas fa-pen-fancy"></i>
+            RedactaFácil
+            <div id="apiStatus" class="api-status offline">
+                <div class="api-status-indicator"></div>
+                <span>API Offline</span>
+            </div>
+        </div>
+        <div class="nav-actions">
+            <!-- Usuario no autenticado -->
+            <div id="guestActions">
+                <button class="nav-auth-btn" onclick="showAuthModal('login')">
+                    <i class="fas fa-sign-in-alt"></i> Iniciar Sesión
+                </button>
+            </div>
+            <!-- Usuario autenticado -->
+            <div id="userActions" style="display: none;">
+                <div class="user-info">
+                    <div class="user-avatar" id="userAvatar">U</div>
+                    <div class="user-details">
+                        <div class="user-name" id="userName">Usuario</div>
+                        <div class="user-plan" id="userPlan">Plan Básico</div>
+                    </div>
+                    <button class="logout-btn" onclick="logout()" title="Cerrar sesión">
+                        <i class="fas fa-sign-out-alt"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="theme-toggle" onclick="toggleTheme()">
+                <i id="theme-icon" class="fas fa-moon"></i>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<!-- Hero Section -->
+<div class="container">
+    <section class="hero">
+        <div class="hero-content">
+            <h1><i class="fas fa-magic"></i> Generador Profesional de Cartas</h1>
+            <h2>Crea cartas y correos profesionales en segundos con nuestro generador inteligente potenciado por IA. Más de 15 tipos de documentos disponibles.</h2>
+            <div class="hero-stats">
+                <div class="stat">
+                    <span class="stat-number">15+</span>
+                    <span class="stat-label">Tipos de Cartas</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number">GPT-3.5</span>
+                    <span class="stat-label">Tecnología IA</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number">5★</span>
+                    <span class="stat-label">Calidad</span>
+                </div>
+            </div>
+            <h3 style="margin-top: 2rem; font-size: 0.875rem;">
+RedactaFácil es un generador de cartas por IA gratuito que te permite crear cartas profesionales en segundos. Ideal para cartas de renuncia, solicitudes laborales, recomendaciones y más.
+</h3>
         </div>
     </section>
 
-    <!-- Contacto Section -->
-    <section id="contacto" class="section section-dark">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">¿Listo para tu hogar propio?</h2>
-                <p class="section-subtitle">Contáctanos y comienza tu camino hacia la vivienda propia</p>
-            </div>
-            <div class="contact-content">
-                <div class="contact-info">
-                    <div class="contact-item" data-aos="fade-right">
-                        <div class="contact-icon">
-                            <i class="fas fa-map-marker-alt"></i>
-                        </div>
-                        <div class="contact-details">
-                            <h3>Ubicación</h3>
-                            <p>Av. 18 de Julio 1234<br>Montevideo, Uruguay</p>
-                        </div>
+    <!-- Main Content -->
+    <div class="main-layout">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <!-- Templates -->
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">
+                        <i class="fas fa-file-alt"></i>
+                        Tipos de Documentos
+                    </h3>
+                    <p class="card-description">Selecciona el tipo de carta que necesitas</p>
+                </div>
+                <div class="templates-grid">
+                    <div class="template-card active" data-type="renuncia">
+                        <span class="template-icon">👋</span>
+                        <div class="template-title">Renuncia</div>
+                        <div class="template-desc">Carta formal de renuncia</div>
                     </div>
-                    <div class="contact-item" data-aos="fade-right" data-aos-delay="100">
-                        <div class="contact-icon">
-                            <i class="fas fa-phone"></i>
-                        </div>
-                        <div class="contact-details">
-                            <h3>Teléfono</h3>
-                            <p>+598 93 395 215<br>+598 99 999 999</p>
-                        </div>
+                    <div class="template-card" data-type="vacaciones">
+                        <span class="template-icon">🏖️</span>
+                        <div class="template-title">Vacaciones</div>
+                        <div class="template-desc">Solicitud de vacaciones</div>
                     </div>
-                    <div class="contact-item" data-aos="fade-right" data-aos-delay="200">
-                        <div class="contact-icon">
-                            <i class="fas fa-envelope"></i>
-                        </div>
-                        <div class="contact-details">
-                            <h3>Email</h3>
-                            <p>nexorahlp@gmail.com</p>
-                        </div>
+                    <div class="template-card" data-type="reclamo">
+                        <span class="template-icon">⚠️</span>
+                        <div class="template-title">Reclamo</div>
+                        <div class="template-desc">Reclamo por servicio</div>
+                    </div>
+                    <div class="template-card" data-type="recomendacion">
+                        <span class="template-icon">⭐</span>
+                        <div class="template-title">Recomendación</div>
+                        <div class="template-desc">Carta de recomendación</div>
+                    </div>
+                    <div class="template-card" data-type="agradecimiento">
+                        <span class="template-icon">🙏</span>
+                        <div class="template-title">Agradecimiento</div>
+                        <div class="template-desc">Carta de agradecimiento</div>
+                    </div>
+                    <div class="template-card" data-type="correo">
+                        <span class="template-icon">📧</span>
+                        <div class="template-title">Email</div>
+                        <div class="template-desc">Correo profesional</div>
+                    </div>
+                    <div class="template-card" data-type="presentacion">
+                        <span class="template-icon">💼</span>
+                        <div class="template-title">Presentación</div>
+                        <div class="template-desc">Carta de presentación</div>
+                    </div>
+                    <div class="template-card" data-type="solicitud">
+                        <span class="template-icon">📋</span>
+                        <div class="template-title">Solicitud</div>
+                        <div class="template-desc">Solicitud general</div>
+                    </div>
+                    <div class="template-card" data-type="invitacion">
+                        <span class="template-icon">💌</span>
+                        <div class="template-title">Invitación</div>
+                        <div class="template-desc">Invitación formal</div>
+                    </div>
+                    <div class="template-card" data-type="disculpa">
+                        <span class="template-icon">😔</span>
+                        <div class="template-title">Disculpa</div>
+                        <div class="template-desc">Carta de disculpa</div>
+                    </div>
+                    <div class="template-card" data-type="propuesta">
+                        <span class="template-icon">🤝</span>
+                        <div class="template-title">Propuesta</div>
+                        <div class="template-desc">Propuesta comercial</div>
+                    </div>
+                    <div class="template-card" data-type="cotizacion">
+                        <span class="template-icon">💰</span>
+                        <div class="template-title">Cotización</div>
+                        <div class="template-desc">Solicitud de cotización</div>
+                    </div>
+                      <div class="template-card" data-type="customizada">
+                        <span class="template-icon">👀</span>
+                        <div class="template-title">Customizada</div>
+                        <div class="template-desc">Solicitud costumizada</div>
+                         <input type="text" id="customizada" class="form-input" placeholder="Ej: Desarrollador Senior">
                     </div>
                 </div>
-                <form class="contact-form" data-aos="fade-left" id="contact-form">
+
+                <!-- Historial -->
+                <div class="history-section">
+                    <div class="history-header">
+                        <div class="history-title">
+                            <i class="fas fa-history"></i> Historial Reciente
+                        </div>
+                        <button class="clear-history" onclick="clearHistory()">Limpiar</button>
+                    </div>
+                    <div id="historyList">
+                        <!-- El historial se cargará dinámicamente aquí -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tips -->
+            <div class="tips-section">
+                <div class="card-header">
+                    <h3 class="card-title">
+                        <i class="fas fa-lightbulb"></i>
+                        Consejos Profesionales
+                    </h3>
+                </div>
+                <div class="tips-grid">
+                    <div class="tip-item">
+                        <div class="tip-title">Sé específico</div>
+                        <div>Proporciona detalles claros y específicos sobre tu situación.</div>
+                    </div>
+                    <div class="tip-item">
+                        <div class="tip-title">Mantén el tono</div>
+                        <div>Elige el tono apropiado según el destinatario y contexto.</div>
+                    </div>
+                    <div class="tip-item">
+                        <div class="tip-title">Revisa siempre</div>
+                        <div>Lee y corrige tu carta antes de enviarla.</div>
+                    </div>
+                    <div class="tip-item">
+                        <div class="tip-title">Incluye fechas</div>
+                        <div>Menciona fechas relevantes para mayor claridad.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Form and Result -->
+        <div>
+            <!-- Form Section -->
+            <div class="form-section">
+                <div class="card-header">
+                    <h2 class="card-title">
+                        <i class="fas fa-edit"></i>
+                        Configuración de tu Carta
+                    </h2>
+                    <p class="card-description">Completa los campos para generar tu carta personalizada</p>
+                </div>
+
+                <form id="letterForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label" for="nombre">
+                                <i class="fas fa-user"></i> Tu nombre completo *
+                            </label>
+                            <input type="text" id="nombre" class="form-input" placeholder="Ej: Juan Pérez García" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="cargo">
+                                <i class="fas fa-briefcase"></i> Tu cargo/posición
+                            </label>
+                            <input type="text" id="cargo" class="form-input" placeholder="Ej: Desarrollador Senior">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label" for="empresa">
+                                <i class="fas fa-building"></i> Empresa/Destinatario
+                            </label>
+                            <input type="text" id="empresa" class="form-input" placeholder="Ej: Tech Solutions S.A." >
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="destinatario">
+                                <i class="fas fa-user-tie"></i> Persona destinataria
+                            </label>
+                            <input type="text" id="destinatario" class="form-input" placeholder="Ej: Sr. Director de RRHH">
+                        </div>
+                    </div>
+
                     <div class="form-group">
-                        <input type="text" id="name" name="name" placeholder="Primer nombre" required>
+                        <label class="form-label" for="motivo">
+                            <i class="fas fa-comment-alt"></i> Motivo o explicación detallada *
+                        </label>
+                        <textarea id="motivo" class="form-textarea" placeholder="Describe el motivo de tu carta con el mayor detalle posible. Incluye contexto, razones específicas y cualquier información relevante..." required></textarea>
                     </div>
-                     <div class="form-group">
-                        <input type="text" id="surname" name="surname" placeholder="Primer apellido" required>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label" for="fechas">
+                                <i class="fas fa-calendar"></i> Fechas relevantes
+                            </label>
+                            <input type="text" id="fechas" class="form-input" placeholder="Ej: Último día 30 de junio de 2024">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="tono">
+                                <i class="fas fa-palette"></i> Tono de la carta
+                            </label>
+                            <select id="tono" class="form-select">
+                                <option value="formal">Formal y respetuoso</option>
+                                <option value="cordial">Cordial y amigable</option>
+                                <option value="directo">Directo y conciso</option>
+                                <option value="diplomatico">Diplomático</option>
+                                <option value="agradecido">Agradecido</option>
+                            </select>
+                        </div>
                     </div>
+
                     <div class="form-group">
-                        <input type="email" id="email" name="email" placeholder="Tu email" required>
+                        <label class="form-label" for="contacto">
+                            <i class="fas fa-envelope"></i> Información de contacto
+                        </label>
+                        <input type="text" id="contacto" class="form-input" placeholder="Email, teléfono u otra información de contacto">
                     </div>
-                       <div class="form-group">
-                        <input type="text" id="CI" name="CI" placeholder="Tu C.I">
-                    </div>
-                    <div class="form-group">
-                        <input type="date" id="birthdate" name="birthdate" spellcheck="true" placeholder="Fecha de nac."  required>
-                    </div>
-                    <div class="form-group">
-                        <input type="tel" id="phone" name="phone" placeholder="Tu teléfono">
-                    </div>
-                
-                    <div class="form-group">
-                        <textarea id="message" name="message" placeholder="Cuéntanos más sobre tu interés..." rows="4"></textarea>
-                    </div>
-                    <button type="submit" class="btn btn-primary btn-full" id="form-submit">
-                        <i class="fas fa-paper-plane"></i>
-                        Solicitar ingreso
+
+                    <button type="submit" class="generate-btn">
+                        <i class="loading fas fa-spinner"></i>
+                        <span class="text">
+                            <i class="fas fa-magic"></i>
+                            Generar Carta con IA
+                        </span>
                     </button>
                 </form>
             </div>
+
+            <!-- Result Section -->
+            <div class="result-section" style="margin-top: 2rem;">
+                <div class="card-header">
+                    <h2 class="card-title">
+                        <i class="fas fa-file-text"></i>
+                        Tu Carta Generada
+                    </h2>
+                    <p class="card-description">Aquí aparecerá tu carta personalizada. Puedes editarla directamente.</p>
+                </div>
+                <div id="resultado" class="result-content empty" contenteditable="true">
+                    <div class="empty-icon">📝</div>
+                    <div>Completa el formulario y haz clic en "Generar Carta" para ver tu carta personalizada aquí.</div>
+                    <div style="font-size: 0.875rem; margin-top: 0.5rem; opacity: 0.7;">Tu carta será generada con IA avanzada</div>
+                    <div class="edit-indicator">Modo edición</div>
+                </div>
+                <div id="resultActions" class="result-actions">
+                    <button class="action-btn" onclick="copyToClipboard()">
+                        <i class="fas fa-copy"></i> Copiar
+                    </button>
+                    <button class="action-btn" onclick="downloadTxt()">
+                        <i class="fas fa-download"></i> Descargar TXT
+                    </button>
+                    <button class="action-btn" onclick="downloadPDF()">
+                        <i class="fas fa-file-pdf"></i> Descargar PDF
+                    </button>
+                    <button class="action-btn" onclick="regenerate()">
+                        <i class="fas fa-redo"></i> Regenerar
+                    </button>
+                    <button class="action-btn" onclick="shareByEmail()">
+                        <i class="fas fa-envelope"></i> Enviar por Email
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Examples Section -->
+    <section class="examples-section">
+        <div class="card-header">
+            <h2 class="card-title">
+                <i class="fas fa-star"></i>
+                Ejemplos y Plantillas
+            </h2>
+            <p class="card-description">Inspírate con estos ejemplos profesionales</p>
+        </div>
+        <div class="examples-grid">
+            <div class="example-card">
+                <div class="example-title">Renuncia Profesional</div>
+                <div class="example-preview">
+                    "Por medio de la presente, comunico formalmente mi decisión de renunciar a mi cargo de Analista de Sistemas, con fecha efectiva el 15 de marzo de 2024. Esta decisión responde a una oportunidad de crecimiento profesional..."
+                </div>
+                <button class="use-example-btn" onclick="useExample('renuncia')">Usar este ejemplo</button>
+            </div>
+            <div class="example-card">
+                <div class="example-title">Solicitud de Vacaciones</div>
+                <div class="example-preview">
+                    "Solicito formalmente autorización para tomar mis vacaciones anuales del 1 al 15 de julio de 2024. He coordinado con mi equipo para asegurar la continuidad de los proyectos..."
+                </div>
+                <button class="use-example-btn" onclick="useExample('vacaciones')">Usar este ejemplo</button>
+            </div>
+            <div class="example-card">
+                <div class="example-title">Carta de Recomendación</div>
+                <div class="example-preview">
+                    "Tengo el agrado de recomendar ampliamente a María González para el puesto de Gerente de Marketing. Durante los 3 años que trabajó bajo mi supervisión, demostró excepcionales habilidades..."
+                </div>
+                <button class="use-example-btn" onclick="useExample('recomendacion')">Usar este ejemplo</button>
+            </div>
         </div>
     </section>
 
+
+
     <!-- Footer -->
     <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <div class="footer-logo">
-                        <i class="fas fa-home"></i>
-                        <span>CoopViva</span>
-                    </div>
-                    <p>Construyendo hogares, fortaleciendo comunidades. Tu cooperativa de vivienda de confianza en Uruguay.</p>
-                    <div class="social-links">
-                        <a href="#"><i class="fab fa-facebook"></i></a>
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                        <a href="#"><i class="fab fa-linkedin"></i></a>
-                        <a href="#"><i class="fab fa-youtube"></i></a>
-                    </div>
-                </div>
-                <div class="footer-section">
-                    <h3>Servicios</h3>
-                    <ul>
-                        <li><a href="#cooperativa">Cooperativa de Vivienda</a></li>
-                        <li><a href="#software">Software CoopTech</a></li>
-                        <li><a href="#">Asesoramiento Legal</a></li>
-                        <li><a href="#">Gestión de Proyectos</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h3>Información</h3>
-                    <ul>
-                        <li><a href="#">Sobre Nosotros</a></li>
-                        <li><a href="#">Preguntas Frecuentes</a></li>
-                        <li><a href="#">Términos y Condiciones</a></li>
-                        <li><a href="#">Política de Privacidad</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h3>Contacto</h3>
-                    <div class="footer-contact">
-                        <p><i class="fas fa-map-marker-alt"></i> Montevideo, Uruguay</p>
-                        <p><i class="fas fa-phone"></i> +598 93 395215</p>
-                        <p><i class="fas fa-envelope"></i> nexorahlp@gmail.com</p>
-                    </div>
-                </div>
+        <div class="footer-content">
+            <h3>RedactaFácil - Generador Profesional de Cartas</h3>
+            <p>Crea cartas y correos profesionales de manera rápida y sencilla con inteligencia artificial.</p>
+            <div class="footer-links">
+                <a href="#" class="footer-link">Términos de Uso</a>
+                <a href="#" class="footer-link">Política de Privacidad</a>
+                <a href="#" class="footer-link">Contacto</a>
+                <a href="#" class="footer-link">Ayuda</a>
             </div>
-            <div class="footer-bottom">
-                <p>&copy; 2025 Nexora Uruguay. Todos los derechos reservados.</p>
-            </div>
+            <p style="margin-top: 2rem; font-size: 0.875rem;">
+                © 2024 RedactaFácil. Todos los derechos reservados.
+            </p>
         </div>
     </footer>
+</div>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "RedactaFácil",
+  "operatingSystem": "Web",
+  "applicationCategory": "BusinessApplication",
+  "url": "https://www.redactafacil.com",
+  "description": "Generador de cartas profesionales con inteligencia artificial",
+  "offers": {
+    "@type": "Offer",
+    "price": "230",
+    "priceCurrency": "UYS"
+  }
+}
 
-    <script src="./assets/js/script.js"></script>
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://sdk.mercadopago.com/js/v2"></script>
+<script src="./js/script.js"></script>
 </body>
 </html>
