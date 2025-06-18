@@ -19,6 +19,10 @@
       "src": "/js/script.js",
       "status": 403,
       "dest": "/403.html"
+    },{
+      "src": "/js/mercadopago-integration.js",
+      "status": 403,
+      "dest": "/403.html"
     },
     {
       "src": "/robots.txt",
