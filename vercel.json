@@ -1,0 +1,34 @@
+{
+  "headers": [
+    {
+      "source": "/js/script.js",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-store"
+        },
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
+        }
+      ]
+    }
+  ],
+  "routes": [
+    {
+      "src": "/js/script.js",
+      "status": 403,
+      "dest": "/403.html"
+    },
+    {
+      "src": "/robots.txt",
+      "status": 403,
+      "dest": "/403.html"
+    },
+    {
+      "src": "/sitemap.xml",
+      "status": 403,
+      "dest": "/403.html"
+    }
+  ]
+}
