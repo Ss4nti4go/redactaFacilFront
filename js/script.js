@@ -7,12 +7,6 @@ let apiOnline = false
 let letterHistory = []
 let pendingVerification = false
 
-// Inicializar Mercado Pago SDK
-if (window.MercadoPago) {
-  const mp = new MercadoPago("APP_USR-70e73a4b-4ada-48b5-a204-eeef10e3dc30", {
-    locale: "es-UY",
-  })
-}
 
 // Ejemplos predefinidos
 const examples = {
